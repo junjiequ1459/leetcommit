@@ -3,7 +3,6 @@ body {
   color: #fff;
   font-family: "Helvetica Neue", sans-serif;
   font-size: 16px;
-  line-height: 1.5;
 }
 
 textarea {
@@ -15,7 +14,6 @@ textarea {
   font-size: 16px;
   height: 300px;
   margin: 20px;
-  padding: 10px;
   resize: none;
   width: 80%;
 }
@@ -72,4 +70,17 @@ button:hover {
   color: #ff66ff;
   font-weight: bold;
   margin: 20px;
+}
+
+.token-div input {
+  background-color: #1e1e1e !important;
+  width: 50%;
+  height: auto;
+  border: 1px solid #ccc;
+  word-wrap: break-word;
+  color: #fff;
+}
+
+.copy-button {
+  background-color: #1e1e1e;
 }

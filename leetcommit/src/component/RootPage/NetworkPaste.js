@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import InstructionPage from "../InstructionPage/InstructionPage";
 
-function NetworkPaste(props) {
+function NetworkPaste() {
   const [csrfToken, setCsrfToken] = useState(null);
   const [sessionToken, setSessionToken] = useState(null);
   const [showInstructions, setShowInstructions] = useState(false);
@@ -28,34 +28,51 @@ function NetworkPaste(props) {
     <>
       <h1 className="purple-text">LeetCommit</h1>
       <form onSubmit={handleSubmit}>
-        <textarea
-          name="text"
-          rows={props.rows}
-          cols={props.cols}
-          placeholder={props.placeholder}
-          style={{
-            backgroundColor: props.backgroundColor,
-            resize: props.resize,
-          }}
-        />
-        <button type="submit">Submit</button>
-        <div className="token-div">
-          {csrfToken && (
-            <p>
-              <span className="purple-text">LEETCODE_CSRF_TOKEN:</span>{" "}
-              {csrfToken}
-            </p>
-          )}
-        </div>
-        <div className="token-div">
-          {sessionToken && (
-            <p>
-              <span className="purple-text">LEETCODE_SESSION:</span>{" "}
-              {sessionToken}
-            </p>
-          )}
-        </div>
+        <textarea name="text" />
+        <button className="submit-button" type="submit">
+          Submit
+        </button>
       </form>
+      {csrfToken && (
+        <div className="token-div">
+          <label htmlFor="csrfTokenInput" className="purple-text">
+            LEETCODE_CSRF_TOKEN:
+          </label>
+          <input
+            type="text"
+            id="csrfTokenInput"
+            value={csrfToken}
+            size={csrfToken.length}
+            readOnly={true}
+          />
+          <button
+            className="copy-button"
+            onClick={() => navigator.clipboard.writeText(csrfToken)}
+          >
+            Copy
+          </button>
+        </div>
+      )}
+      {sessionToken && (
+        <div className="token-div">
+          <label htmlFor="sessionTokenInput" className="purple-text">
+            LEETCODE_SESSION:
+          </label>
+          <input
+            type="text"
+            id="sessionTokenInput"
+            value={sessionToken}
+            size={sessionToken.length}
+            readOnly={true}
+          />
+          <button
+            className="copy-button"
+            onClick={() => navigator.clipboard.writeText(sessionToken)}
+          >
+            Copy
+          </button>
+        </div>
+      )}
       <div className="instruction-button">
         <button onClick={toggleInstructions}>Instructions</button>
       </div>
