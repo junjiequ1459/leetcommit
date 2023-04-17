@@ -1,20 +1,21 @@
-import logo from "./logo.svg";
-import NetworkPaste from "./component/NetworkPaste";
-import "./App.css";
-import DownloadButton from "./component/DownloadButton";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import RootPage from "./component/RootPage/RootPage";
+import InstructionPage from "./component/InstructionPage/InstructionPage";
 
 function App() {
   return (
-    <div className="App">
-      <NetworkPaste
-        rows={8}
-        cols={80}
-        placeholder="Paste your text here"
-        backgroundColor="#f0f0f0"
-        resize="none"
-      />
-      <DownloadButton />
-    </div>
+    <Router>
+      <div className="App">
+        <Switch>
+          <Route exact path="/">
+            <RootPage />
+          </Route>
+          <Route path="/instructions">
+            <InstructionPage />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 

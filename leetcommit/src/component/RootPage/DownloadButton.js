@@ -8,7 +8,7 @@ function DownloadButton() {
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 8 * * 6"
+    - cron: "0 8 * * *" #runs once a day
 
 jobs:
   build:
