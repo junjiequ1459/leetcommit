@@ -10,9 +10,6 @@ function App() {
           <Route exact path="/">
             <RootPage />
           </Route>
-          <Route path="/instructions">
-            <InstructionPage />
-          </Route>
         </Switch>
       </div>
     </Router>

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import InstructionPage from "../InstructionPage/InstructionPage";
 
 function NetworkPaste(props) {
   const [csrfToken, setCsrfToken] = useState(null);
   const [sessionToken, setSessionToken] = useState(null);
+  const [showInstructions, setShowInstructions] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -19,8 +20,13 @@ function NetworkPaste(props) {
     setSessionToken(newSessionToken);
   };
 
+  const toggleInstructions = () => {
+    setShowInstructions(!showInstructions);
+  };
+
   return (
     <>
+      <h1 className="purple-text">LeetCommit</h1>
       <form onSubmit={handleSubmit}>
         <textarea
           name="text"
@@ -51,10 +57,13 @@ function NetworkPaste(props) {
         </div>
       </form>
       <div className="instruction-button">
-        <Link to="/instructions">
-          <button>Instructions</button>
-        </Link>
+        <button onClick={toggleInstructions}>Instructions</button>
       </div>
+      {showInstructions && (
+        <div className="instructions">
+          <InstructionPage />
+        </div>
+      )}
     </>
   );
 }
