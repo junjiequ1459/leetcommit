@@ -14,7 +14,7 @@ function NetworkPaste() {
 
   const csrfName = "LEETCODE_CSRF_TOKEN";
   const sessionName = "LEETCODE_SESSION";
-  const owner = "junjiequ1459";
+  let owner;
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -37,6 +37,20 @@ function NetworkPaste() {
   const handleCreateRepo = async (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
     setLogMessages([]);
+
+    try {
+      const response = await fetch("https://api.github.com/user", {
+        headers: {
+          Authorization: `token ${token}`,
+        },
+      });
+      const data = await response.json();
+      owner = data.login;
+    } catch (error) {
+      console.error("Error fetching user:", error.message);
+      setLogMessages([...logMessages, `Error fetching user: ${error.message}`]);
+      return;
+    }
 
     try {
       // Create the repository
