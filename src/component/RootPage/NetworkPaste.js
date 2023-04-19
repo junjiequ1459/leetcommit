@@ -36,6 +36,8 @@ function NetworkPaste() {
 
   const handleCreateRepo = async (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
+    setLogMessages([]);
+
     try {
       // Create the repository
       await createRepo(repo, token);
@@ -92,7 +94,6 @@ function NetworkPaste() {
       console.log("Sync.yml file created successfully");
 
       setLogMessages([
-        ...logMessages,
         `Repository ${repo} created successfully!`,
         `Secret ${csrfName} created successfully`,
         `Secret ${sessionName} created successfully`,
@@ -104,7 +105,6 @@ function NetworkPaste() {
         error.message
       );
       setLogMessages([
-        ...logMessages,
         `Error creating repository, secrets, or sync.yml file: ${error.message}`,
       ]);
     }
