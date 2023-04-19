@@ -47,9 +47,7 @@ function NetworkPaste() {
         error.message
       );
     }
-  };
 
-  const handleSyncLeetCode = async () => {
     try {
       // Set the secrets
       await setSecret(owner, repo, csrfName, csrfToken, token);
@@ -178,9 +176,6 @@ function NetworkPaste() {
           />
           <button type="submit">Create Repo</button>
         </form>
-      </div>
-      <div className="create-repo-button">
-        <button onClick={handleSyncLeetCode}>Sync LeetCode</button>
       </div>
     </>
   );
