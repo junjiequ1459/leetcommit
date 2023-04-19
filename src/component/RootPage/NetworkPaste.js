@@ -8,13 +8,13 @@ function NetworkPaste() {
   const [csrfToken, setCsrfToken] = useState(null);
   const [sessionToken, setSessionToken] = useState(null);
   const [showInstructions, setShowInstructions] = useState(false);
+  const [repo, setRepo] = useState("");
+  const [token, setToken] = useState("");
 
-  // const token = "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j";
-  const token =
-    "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";
+  // const token =
+  //   "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";
   const csrfName = "LEETCODE_CSRF_TOKEN";
   const sessionName = "LEETCODE_SESSION";
-  const repo = "Tests";
   const owner = "junjiequ1459";
 
   const handleSubmit = (event) => {
@@ -35,7 +35,8 @@ function NetworkPaste() {
     setShowInstructions(!showInstructions);
   };
 
-  const handleCreateRepo = async () => {
+  const handleCreateRepo = async (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
     try {
       // Create the repository
       await createRepo(repo, token);
@@ -157,8 +158,26 @@ function NetworkPaste() {
           <InstructionPage />
         </div>
       )}
-      <div className="create-repo-button">
-        <button onClick={handleCreateRepo}>Create Repo</button>
+      <div className="create-repo-form">
+        <form onSubmit={handleCreateRepo}>
+          <label htmlFor="repoName">Repository Name:</label>
+          <input
+            type="text"
+            id="repoName"
+            name="repoName"
+            value={repo}
+            onChange={(event) => setRepo(event.target.value)}
+          />
+          <label htmlFor="accessToken">Access Token:</label>
+          <input
+            type="text"
+            id="accessToken"
+            name="accessToken"
+            value={token}
+            onChange={(event) => setToken(event.target.value)}
+          />
+          <button type="submit">Create Repo</button>
+        </form>
       </div>
       <div className="create-repo-button">
         <button onClick={handleSyncLeetCode}>Sync LeetCode</button>
