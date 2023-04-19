@@ -10,9 +10,8 @@ function NetworkPaste() {
   const [showInstructions, setShowInstructions] = useState(false);
   const [repo, setRepo] = useState("");
   const [token, setToken] = useState("");
+  const [logMessages, setLogMessages] = useState([]);
 
-  // const token =
-  //   "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";
   const csrfName = "LEETCODE_CSRF_TOKEN";
   const sessionName = "LEETCODE_SESSION";
   const owner = "junjiequ1459";
@@ -24,8 +23,8 @@ function NetworkPaste() {
     const csrfTokenRegex = /csrftoken=([a-zA-Z0-9]+)/;
     const sessionTokenRegex = /LEETCODE_SESSION=([a-zA-Z0-9._-]+)/;
 
-    const newCsrfToken = text.match(csrfTokenRegex)?.[1] || "Not found";
-    const newSessionToken = text.match(sessionTokenRegex)?.[1] || "Not found";
+    const newCsrfToken = text.match(csrfTokenRegex)?.[1] || null;
+    const newSessionToken = text.match(sessionTokenRegex)?.[1] || null;
 
     setCsrfToken(newCsrfToken);
     setSessionToken(newSessionToken);
@@ -91,11 +90,23 @@ function NetworkPaste() {
         token
       );
       console.log("Sync.yml file created successfully");
+
+      setLogMessages([
+        ...logMessages,
+        `Repository ${repo} created successfully!`,
+        `Secret ${csrfName} created successfully`,
+        `Secret ${sessionName} created successfully`,
+        "Sync.yml file created successfully",
+      ]);
     } catch (error) {
       console.error(
         "Error creating repository, secrets, or sync.yml file:",
         error.message
       );
+      setLogMessages([
+        ...logMessages,
+        `Error creating repository, secrets, or sync.yml file: ${error.message}`,
+      ]);
     }
   };
 
@@ -108,52 +119,35 @@ function NetworkPaste() {
           Submit
         </button>
       </form>
-      {csrfToken && (
+      {csrfToken ? (
         <div className="token-div">
           <label htmlFor="csrfTokenInput" className="purple-text">
             LEETCODE_CSRF_TOKEN:
           </label>
-          <input
-            type="text"
-            id="csrfTokenInput"
-            value={csrfToken}
-            size={csrfToken.length}
-            readOnly={true}
-          />
-          <button
-            className="copy-button"
-            onClick={() => navigator.clipboard.writeText(csrfToken)}
-          >
-            Copy
-          </button>
+          <span className="checkmark">&#10003;</span>
+        </div>
+      ) : (
+        <div className="token-div">
+          <label htmlFor="csrfTokenInput" className="purple-text">
+            LEETCODE_CSRF_TOKEN:
+          </label>
+          <span className="red-x">&#10005;</span>
         </div>
       )}
-      {sessionToken && (
+
+      {sessionToken ? (
         <div className="token-div">
           <label htmlFor="sessionTokenInput" className="purple-text">
             LEETCODE_SESSION:
           </label>
-          <input
-            type="text"
-            id="sessionTokenInput"
-            value={sessionToken}
-            size={sessionToken.length}
-            readOnly={true}
-          />
-          <button
-            className="copy-button"
-            onClick={() => navigator.clipboard.writeText(sessionToken)}
-          >
-            Copy
-          </button>
+          <span className="checkmark">&#10003;</span>
         </div>
-      )}
-      <div className="instruction-button">
-        <button onClick={toggleInstructions}>Instructions</button>
-      </div>
-      {showInstructions && (
-        <div className="instructions">
-          <InstructionPage />
+      ) : (
+        <div className="token-div">
+          <label htmlFor="sessionTokenInput" className="purple-text">
+            LEETCODE_SESSION:
+          </label>
+          <span className="xmark">&#10005;</span>
         </div>
       )}
       <div className="create-repo-form">
@@ -177,6 +171,19 @@ function NetworkPaste() {
           <button type="submit">Create Repo</button>
         </form>
       </div>
+      <div className="console-logs">
+        {logMessages.map((message, index) => (
+          <p key={index}>{message}</p>
+        ))}
+      </div>
+      <div className="instruction-button">
+        <button onClick={toggleInstructions}>Instructions</button>
+      </div>
+      {showInstructions && (
+        <div className="instructions">
+          <InstructionPage />
+        </div>
+      )}
     </>
   );
 }
