@@ -21,8 +21,9 @@ export async function setSecret(
   const publicKeyResponse = await fetch(publicKeyUrl, { headers });
 
   if (!publicKeyResponse.ok) {
+    const errorText = await publicKeyResponse.text();
     throw new Error(
-      `Failed to fetch public key: ${publicKeyResponse.statusText}`
+      `Failed to fetch public key: ${publicKeyResponse.statusText} (${errorText})`
     );
   }
 
@@ -54,7 +55,10 @@ export async function setSecret(
   });
 
   if (!response.ok) {
-    throw new Error(`Failed to create secret: ${response.statusText}`);
+    const errorText = await response.text();
+    throw new Error(
+      `Failed to create secret: ${response.statusText} (${errorText})`
+    );
   }
 
   console.log(

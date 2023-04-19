@@ -9,23 +9,44 @@ function NetworkPaste() {
   const [sessionToken, setSessionToken] = useState(null);
   const [showInstructions, setShowInstructions] = useState(false);
   const [repo, setRepo] = useState("");
+  const [owner, setOwner] = useState("");
   const [token, setToken] = useState("");
   const [logMessages, setLogMessages] = useState([]);
+  // const [reRender, setReRender] = useState(false);
 
   const csrfName = "LEETCODE_CSRF_TOKEN";
   const sessionName = "LEETCODE_SESSION";
-  let owner;
 
   useEffect(() => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const codeParam = urlParams.get("code");
+    if (codeParam) {
+      async function getAccessToken() {
+        await fetch("http://localhost:4000/getAccessToken?code=" + codeParam)
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            if (data.access_token) {
+              setToken(data.access_token);
+              // setToken(
+              //   "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"
+              // );
+              // setReRender(!reRender);
+            }
+          });
+      }
+      getAccessToken();
+    }
   }, []);
   const CLIENT_ID = "aba66794a802d297acff";
 
   const handleConnectGitHub = () => {
+    const SCOPE =
+      "repo,user,workflow,write:repo_hook,read:user,user:email,user:follow";
     window.location.assign(
-      "https://github.com/login/oauth/authorize?client_id=" + CLIENT_ID
+      `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&scope=${SCOPE}`
     );
   };
 
@@ -51,6 +72,8 @@ function NetworkPaste() {
     e.preventDefault(); // Prevent the default form submission behavior
     setLogMessages([]);
 
+    // Get the access token from localStorage
+    console.log(token);
     try {
       const response = await fetch("https://api.github.com/user", {
         headers: {
@@ -58,24 +81,27 @@ function NetworkPaste() {
         },
       });
       const data = await response.json();
-      owner = data.login;
+      setOwner(data.login);
     } catch (error) {
       console.error("Error fetching user:", error.message);
       setLogMessages([...logMessages, `Error fetching user: ${error.message}`]);
       return;
     }
-
     try {
       // Create the repository
       await createRepo(repo, token);
-      // Create the sync.yml file
-    } catch (error) {
-      console.error(
-        "Error creating repository, secrets, or sync.yml file:",
-        error.message
-      );
-    }
 
+      setLogMessages([`Repository ${repo} created successfully!`]);
+    } catch (error) {
+      console.error("Error creating repository:", error.message);
+      setLogMessages([
+        ...logMessages,
+        `Error creating repository: ${error.message}`,
+      ]);
+    }
+  };
+
+  const handleSetRepo = async (e) => {
     try {
       // Set the secrets
       await setSecret(owner, repo, csrfName, csrfToken, token);
@@ -128,11 +154,11 @@ function NetworkPaste() {
       ]);
     } catch (error) {
       console.error(
-        "Error creating repository, secrets, or sync.yml file:",
+        "Error setting secrets or creating sync.yml file:",
         error.message
       );
       setLogMessages([
-        `Error creating repository, secrets, or sync.yml file: ${error.message}`,
+        `Error setting secrets or creating sync.yml file: ${error.message}`,
       ]);
     }
   };
@@ -190,6 +216,9 @@ function NetworkPaste() {
           <button type="submit">Create Repo</button>
         </form>
       </div>
+
+      <button onClick={handleSetRepo}>LinkLeetCode</button>
+
       <div className="console-logs">
         {logMessages.map((message, index) => (
           <p key={index}>{message}</p>
@@ -208,5 +237,4 @@ function NetworkPaste() {
     </>
   );
 }
-
 export default NetworkPaste;
