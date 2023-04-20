@@ -91,7 +91,6 @@ button:hover,
 }
 
 .instruction-button {
-  text-align: right;
   margin-right: 20px;
 }
 
@@ -100,4 +99,14 @@ button:hover,
   border: 1px solid #6e7681;
   padding: 20px;
   background-color: #161b22;
+}
+
+.checkmark {
+  margin-left: 10px;
+  color: #28a745; /* Green */
+}
+
+.red-x {
+  margin-left: 10px;
+  color: #dc3545; /* Red */
 }

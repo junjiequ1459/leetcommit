@@ -218,7 +218,7 @@ function NetworkPaste() {
           <label htmlFor="sessionTokenInput" className="purple-text">
             LEETCODE_SESSION:
           </label>
-          <span className="xmark">&#10005;</span>
+          <span className="red-x">&#10005;</span>
         </div>
       )}
       <div className="create-repo-form">
