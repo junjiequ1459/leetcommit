@@ -12,6 +12,9 @@ function NetworkPaste() {
   const [owner, setOwner] = useState("");
   const [token, setToken] = useState("");
   const [logMessages, setLogMessages] = useState([]);
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+
   // const [reRender, setReRender] = useState(false);
 
   const csrfName = "LEETCODE_CSRF_TOKEN";
@@ -85,6 +88,8 @@ function NetworkPaste() {
       });
       const data = await response.json();
       setOwner(data.login);
+      setUserName(data.name); // The user's name
+      setEmail(data.email); // The user's email
     } catch (error) {
       console.error("Error fetching user:", error.message);
       setLogMessages([...logMessages, `Error fetching user: ${error.message}`]);
@@ -132,6 +137,14 @@ function NetworkPaste() {
            runs-on: ubuntu-latest
     
            steps:
+             - name: Checkout
+               uses: actions/checkout@v2
+
+             - name: Set Git Config
+               run: |
+                 git config user.name "${userName}"
+                 git config user.email "${email}"
+
              - name: Sync
                uses: joshcai/leetcode-sync@v1.5
                with:
