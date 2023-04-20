@@ -23,7 +23,10 @@ function NetworkPaste() {
     const codeParam = urlParams.get("code");
     if (codeParam) {
       async function getAccessToken() {
-        await fetch("http://localhost:4000/getAccessToken?code=" + codeParam)
+        await fetch(
+          "https://seahorse-app-qclkm.ondigitalocean.app/getAccessToken?code=" +
+            codeParam
+        )
           .then((response) => {
             return response.json();
           })
