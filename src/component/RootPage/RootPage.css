@@ -1,45 +1,29 @@
 body {
-  background-color: #121212;
-  color: #fff;
-  font-family: "Helvetica Neue", sans-serif;
+  background-color: #0d1117;
+  color: #c9d1d9;
+  font-family: Helvetica, Arial, sans-serif;
   font-size: 16px;
 }
 
 textarea {
-  background-color: #1e1e1e !important;
+  background-color: #161b22;
   border: none;
-  border-radius: 5px;
-  color: #fff;
+  border-radius: 3px;
+  color: #c9d1d9;
   font-family: inherit;
   font-size: 16px;
   height: 300px;
   margin: 20px;
+  padding: 10px;
   resize: none;
   width: 80%;
 }
 
-button {
-  background-color: #1976d2;
-  border: none;
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 16px;
-  margin: 20px;
-  padding: 10px;
-  transition: background-color 0.2s ease;
-}
-
-button:hover {
-  background-color: #1565c0;
-}
-
+button,
 .download-button {
-  display: inline-block;
-  background-color: #1976d2;
+  background-color: #238636;
   border: none;
-  border-radius: 5px;
+  border-radius: 3px;
   color: #fff;
   cursor: pointer;
   font-family: inherit;
@@ -50,8 +34,9 @@ button:hover {
   transition: background-color 0.2s ease;
 }
 
+button:hover,
 .download-button:hover {
-  background-color: #1565c0;
+  background-color: #2ea043;
 }
 
 .download-button:active {
@@ -64,23 +49,55 @@ button:hover {
   overflow-wrap: break-word;
   word-wrap: break-word;
   word-break: break-all;
-}
-
-.purple-text {
-  color: #ff66ff;
-  font-weight: bold;
   margin: 20px;
 }
 
+.purple-text {
+  color: #c9d1d9;
+  font-weight: bold;
+}
+
 .token-div input {
-  background-color: #1e1e1e !important;
-  width: 50%;
+  background-color: #161b22;
+  border: 1px solid #6e7681;
+  color: #c9d1d9;
   height: auto;
-  border: 1px solid #ccc;
-  word-wrap: break-word;
-  color: #fff;
+  margin-left: 20px;
+  padding: 10px;
+  width: 50%;
 }
 
 .copy-button {
-  background-color: #1e1e1e;
+  background-color: #0d1117;
+  color: #c9d1d9;
+  border: 1px solid #6e7681;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 5px 10px;
+  text-decoration: none;
+}
+
+.copy-button:hover {
+  background-color: #161b22;
+}
+
+.console-logs {
+  margin: 20px;
+}
+
+.console-logs p {
+  margin: 5px 0;
+}
+
+.instruction-button {
+  text-align: right;
+  margin-right: 20px;
+}
+
+.instructions {
+  margin: 20px;
+  border: 1px solid #6e7681;
+  padding: 20px;
+  background-color: #161b22;
 }

@@ -182,6 +182,8 @@ function NetworkPaste() {
   return (
     <>
       <h1 className="purple-text">LeetCommit</h1>
+      <button onClick={handleConnectGitHub}>ConnectToGitHub</button>
+
       <form onSubmit={handleSubmit}>
         <textarea name="text" />
         <button className="submit-button" type="submit">
@@ -248,8 +250,6 @@ function NetworkPaste() {
           <InstructionPage />
         </div>
       )}
-
-      <button onClick={handleConnectGitHub}>ConnectToGitHub</button>
     </>
   );
 }
