@@ -13,6 +13,10 @@ var app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+app.get("/", function (req, res) {
+  res.send("Hello, world!");
+});
+
 app.get("/getAccessToken", async function (req, res) {
   req.query.code;
   const params =
@@ -53,5 +57,5 @@ app.get("/getAccessToken", async function (req, res) {
 });
 
 app.listen(8080, function () {
-  console.log("CORS server running on port 4000");
+  console.log("CORS server running on port 8080");
 });
