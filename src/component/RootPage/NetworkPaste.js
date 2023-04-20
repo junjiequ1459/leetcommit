@@ -78,8 +78,9 @@ function NetworkPaste() {
     e.preventDefault(); // Prevent the default form submission behavior
     setLogMessages([]);
 
+    // Get the access token from localStorage
+    console.log(token);
     try {
-      // Get the user's GitHub login name, name, and email
       const response = await fetch("https://api.github.com/user", {
         headers: {
           Authorization: `token ${token}`,
@@ -87,27 +88,22 @@ function NetworkPaste() {
       });
       const data = await response.json();
       setOwner(data.login);
-      setUserName(data.name);
-      setEmail(data.email);
+      setUserName(data.name); // The user's name
+      setEmail(data.email); // The user's email
     } catch (error) {
       console.error("Error fetching user:", error.message);
-      setLogMessages([`Error fetching user: ${error.message}`]);
+      setLogMessages([...logMessages, `Error fetching user: ${error.message}`]);
       return;
     }
-
     try {
       // Create the repository
-      const response = await createRepo(repo, token);
-      if (response.status === 201) {
-        setLogMessages([`Repository ${repo} created successfully!`]);
-      } else {
-        setLogMessages([`Error creating repository: ${response.statusText}`]);
-      }
+      await createRepo(repo, token);
+      setLogMessages([`Repository ${repo} created successfully!`]);
     } catch (error) {
-      console.error("Error creating repository:", error.message);
       setLogMessages([`Error creating repository: ${error.message}`]);
     }
   };
+
   const handleSetRepo = async (e) => {
     try {
       // Set the secrets
