@@ -182,6 +182,14 @@ function NetworkPaste() {
   return (
     <>
       <h1 className="purple-text">LeetCommit</h1>
+      <div className="instruction-button">
+        <button onClick={toggleInstructions}>Instructions</button>
+      </div>
+      {showInstructions && (
+        <div className="instructions">
+          <InstructionPage />
+        </div>
+      )}
       <button onClick={handleConnectGitHub}>ConnectToGitHub</button>
 
       <form onSubmit={handleSubmit}>
@@ -242,14 +250,6 @@ function NetworkPaste() {
           <p key={index}>{message}</p>
         ))}
       </div>
-      <div className="instruction-button">
-        <button onClick={toggleInstructions}>Instructions</button>
-      </div>
-      {showInstructions && (
-        <div className="instructions">
-          <InstructionPage />
-        </div>
-      )}
     </>
   );
 }
