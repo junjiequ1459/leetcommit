@@ -14,15 +14,15 @@ function InstructionPage() {
           token
         </li>
 
+        <li>Step 4: set a repo name, click on create repo</li>
+
+        <li>Step 5: click on linkleetcode</li>
         <li>
-          Step 4: set a repo name and enter in your accessToken, click on create
-          repo
-        </li>
-        <li>
-          Step 5: Nagivate to github repo -> Action -> find the workflow Sync
+          Step 6: Nagivate to github repo -> Action -> find the workflow Sync
           Leetcode
         </li>
-        <li>Step 6: Click Run Workflow</li>
+
+        <li>Step 7: Click Run Workflow</li>
       </ul>
     </div>
   );
